@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tax Calculator</title>
+</head>
+<body>
+
+  <h2>Tax Calculator</h2>
+
+  <p>
+    <label for="amount"><b>Amount</b></label><br />
+    &#8377; <input type="number" id="amount" placeholder="0.00" min="0" step="0.01" size="20" />
+  </p>
+
+  <p>
+    <label for="rate"><b>Tax Percentage</b></label><br />
+    <input type="number" id="rate" placeholder="0" min="0" max="100" step="0.01" size="10" /> %
+  </p>
+
+  <p>
+    Quick set:
+    <input type="button" value="5%"  onclick="setRate(5)" />
+    <input type="button" value="12%" onclick="setRate(12)" />
+    <input type="button" value="18%" onclick="setRate(18)" />
+    <input type="button" value="28%" onclick="setRate(28)" />
+  </p>
+
+  <hr />
+
+  <table>
+    <tr>
+      <td>Amount</td>
+      <td>&nbsp;&nbsp;</td>
+      <td><b id="o_amount">&#8377; 0.00</b></td>
+    </tr>
+    <tr>
+      <td>Tax Amount</td>
+      <td>&nbsp;&nbsp;</td>
+      <td><b id="o_tax">&#8377; 0.00</b></td>
+    </tr>
+    <tr>
+      <td colspan="3"><hr /></td>
+    </tr>
+    <tr>
+      <td><b>Total Amount</b></td>
+      <td>&nbsp;&nbsp;</td>
+      <td><b id="o_total">&#8377; 0.00</b></td>
+    </tr>
+  </table>
+
+  <br />
+  <input type="button" value="Reset" onclick="resetAll()" />
+
+  <script>
+    function fmt(n) {
+      return '\u20B9 ' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function calc() {
+      var a = parseFloat(document.getElementById('amount').value) || 0;
+      var r = parseFloat(document.getElementById('rate').value) || 0;
+      var t = a * r / 100;
+      document.getElementById('o_amount').textContent = fmt(a);
+      document.getElementById('o_tax').textContent    = fmt(t);
+      document.getElementById('o_total').textContent  = fmt(a + t);
+    }
+
+    function setRate(r) {
+      document.getElementById('rate').value = r;
+      calc();
+    }
+
+    function resetAll() {
+      document.getElementById('amount').value = '';
+      document.getElementById('rate').value   = '';
+      calc();
+    }
+
+    document.getElementById('amount').oninput = calc;
+    document.getElementById('rate').oninput   = calc;
+  </script>
+
+</body>
+</html>
