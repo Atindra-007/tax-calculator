@@ -78,8 +78,7 @@
       calc();
     }
 
-    document.getElementById('amount').oninput = calc;
-    document.getElementById('rate').oninput   = calc;
+    setInterval(calc, 300);
   </script>
 
 </body>
