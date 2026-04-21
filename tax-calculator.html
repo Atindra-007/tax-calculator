@@ -10,21 +10,27 @@
   <h2>Tax Calculator</h2>
 
   <p>
-    <label for="amount"><b>Amount</b></label><br />
+    <label><b>Amount</b></label><br />
     &#8377; <input type="number" id="amount" placeholder="0.00" min="0" step="0.01" size="20" />
   </p>
 
   <p>
-    <label for="rate"><b>Tax Percentage</b></label><br />
+    <label><b>Tax Percentage</b></label><br />
     <input type="number" id="rate" placeholder="0" min="0" max="100" step="0.01" size="10" /> %
   </p>
 
   <p>
     Quick set:
-    <input type="button" value="5%"  onclick="setRate(5)" />
-    <input type="button" value="12%" onclick="setRate(12)" />
-    <input type="button" value="18%" onclick="setRate(18)" />
-    <input type="button" value="28%" onclick="setRate(28)" />
+    <input type="button" value="5%"  onclick="document.getElementById('rate').value=5;calc();" />
+    <input type="button" value="12%" onclick="document.getElementById('rate').value=12;calc();" />
+    <input type="button" value="18%" onclick="document.getElementById('rate').value=18;calc();" />
+    <input type="button" value="28%" onclick="document.getElementById('rate').value=28;calc();" />
+  </p>
+
+  <p>
+    <input type="button" value="Calculate" onclick="calc();" />
+    &nbsp;
+    <input type="button" value="Reset" onclick="document.getElementById('amount').value='';document.getElementById('rate').value='';calc();" />
   </p>
 
   <hr />
@@ -50,35 +56,15 @@
     </tr>
   </table>
 
-  <br />
-  <input type="button" value="Reset" onclick="resetAll()" />
-
   <script>
-    function fmt(n) {
-      return '\u20B9 ' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-
     function calc() {
       var a = parseFloat(document.getElementById('amount').value) || 0;
       var r = parseFloat(document.getElementById('rate').value) || 0;
       var t = a * r / 100;
-      document.getElementById('o_amount').textContent = fmt(a);
-      document.getElementById('o_tax').textContent    = fmt(t);
-      document.getElementById('o_total').textContent  = fmt(a + t);
+      document.getElementById('o_amount').textContent = '\u20B9 ' + a.toFixed(2);
+      document.getElementById('o_tax').textContent    = '\u20B9 ' + t.toFixed(2);
+      document.getElementById('o_total').textContent  = '\u20B9 ' + (a + t).toFixed(2);
     }
-
-    function setRate(r) {
-      document.getElementById('rate').value = r;
-      calc();
-    }
-
-    function resetAll() {
-      document.getElementById('amount').value = '';
-      document.getElementById('rate').value   = '';
-      calc();
-    }
-
-    setInterval(calc, 300);
   </script>
 
 </body>
